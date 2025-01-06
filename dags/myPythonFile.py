@@ -42,42 +42,23 @@ with DAG (
     @task(task_id="process_data")
     def process_data(data_to_process):
         result = data_to_process["results"] [0]
-        gender = result["gender"]
-        first_name = result["name"]["first"]
-        last_name = result["name"]["last"]
-        location_street_number = result["location"]["street"]["number"]
-        location_street_name = result["location"]["street"]["name"]
-        city = result["location"]["city"]
-        state = result["location"]["state"]
-        country = result["location"]["country"]
-        postcode = str(result["location"]["postcode"])    # this was an integer data type (now turned to a sting)
-        email = result["email"]
-        user_name = result["login"]["username"]
-        user_password = result["login"]["password"]
-        age = result["dob"]["age"]              # this is an integer data type
-        date_registered = result["registered"]["date"]
-        phone_number = result["phone"]
-
-         
-
-
         data = {
-                    "gender": gender,
-                    "first_name": first_name,
-                    "last_name": last_name,
-                    "address": f"{location_street_number} {location_street_name}",
-                    "city": city,
-                    "state": state,
-                    "country": country,
-                    "postcode": postcode,
-                    "email": email,
-                    "user_name": user_name,
-                    "user_password": user_password,
-                    "age": age,
-                    "date_registered": date_registered,
-                    "phone_number": phone_number
+                    "gender" : result["gender"],
+                    "first_name" : result["name"]["first"],
+                    "last_name" : result["name"]["last"],
+                    "address" : f"{result["location"]["street"]["number"]} {result["location"]["street"]["name"]}",
+                    "city" : result["location"]["city"],
+                    "state" : result["location"]["state"],
+                    "country" : result["location"]["country"],
+                    "postcode" : str(result["location"]["postcode"]),    # this was an integer data type (now turned to a sting)
+                    "email" : result["email"],
+                    "user_name" : result["login"]["username"],
+                    "user_password" : result["login"]["password"],
+                    "age" : result["dob"]["age"],             # this is an integer data type
+                    "date_registered" : result["registered"]["date"],
+                    "phone_number" : result["phone"]
                 
-            }
+                }
         
         return data
     
