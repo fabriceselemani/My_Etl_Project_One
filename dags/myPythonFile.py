@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.providers.http.hooks.http import HttpHook                  # to install   
+from airflow.providers.http.hooks.http import HttpHook                     
 from airflow.decorators import task
 from datetime import datetime 
 from airflow.providers.postgres.hooks.postgres import PostgresHook  
@@ -14,7 +14,7 @@ postGres_id = "postgres_conn"
 
 default_args = {
     'owner': 'fabrice_selemani',
-    'start_date': datetime(2024, 12, 16)  # Correct usage of datetime
+    'start_date': datetime(2024, 12, 16)  
 }
 
 
@@ -29,7 +29,7 @@ with DAG (
 
     @task(task_id="Extract_data") 
     def extract_data():
-        # Use HttpHook to retrieve the URL from Airflow connection settings
+        # HttpHook to retrieve the URL from Airflow connection settings
         http_hook = HttpHook(method='GET', http_conn_id=conn_id)
         # Execute the GET request
         response = http_hook.run('')  # Empty string for default endpoint from connection
@@ -50,11 +50,11 @@ with DAG (
                     "city" : result["location"]["city"],
                     "state" : result["location"]["state"],
                     "country" : result["location"]["country"],
-                    "postcode" : str(result["location"]["postcode"]),    # this was an integer data type (now turned to a sting)
+                    "postcode" : str(result["location"]["postcode"]),    
                     "email" : result["email"],
                     "user_name" : result["login"]["username"],
                     "user_password" : result["login"]["password"],
-                    "age" : result["dob"]["age"],             # this is an integer data type
+                    "age" : result["dob"]["age"],             
                     "date_registered" : result["registered"]["date"],
                     "phone_number" : result["phone"]
                 
@@ -100,7 +100,7 @@ with DAG (
         conn.commit()
         conn.close()
 
-
+    # calling the functions
     data_extracted = extract_data()
     processed_data = process_data(data_extracted)
     load_data(processed_data)
